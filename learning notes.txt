@@ -195,7 +195,18 @@ Git用`<<<<<<<`，`=======`，`>>>>>>>`标记出不同分支的内容，我们�
   - feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
 - 总之，就是在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！
 ### 2.抓取分支
+- 当你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的master分支。
+ 
+      $ git branch
+      * master
+- 如果想要在dev分支上开发：
+      
+      $git checkout -b dev origin/dev
+- 现在，队友视角就可以在本地的dev库进行修改，并且时不时的推送到远程库
 
+      $ git add xxx.xx
+      $ git commit -m "XXX'
+      $ git push origin dev
 # **出现vi界面**
 It’s not a Git error message, it’s the editor git uses your default editor.
 
