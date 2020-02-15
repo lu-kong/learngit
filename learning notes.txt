@@ -200,7 +200,6 @@ Git用`<<<<<<<`，`=======`，`>>>>>>>`标记出不同分支的内容，我们�
       $ git branch
       * master
 - 如果想要在dev分支上开发：
-      git
       $git checkout -b dev origin/dev
 - 现在，队友视角就可以在本地的dev库进行修改，并且时不时的推送到远程库
 
