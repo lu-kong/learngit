@@ -1,7 +1,10 @@
 # **Git 学习笔记**
+- 作者：lu KONG
+- 此`md`为作者学习Git时的笔记，用于日后查阅以及可能的分享，文章主题内容以及主要的学习资料来自[廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/896043488029600)，如有任何建议和指导，欢迎[联系作者](https://github.com/lu-kong)
+- 感谢[廖雪峰老师](https://github.com/michaelliao)  
+- v2.0   --*2020年2月15日*  
 
-
-
+# 安装git的初始设置
     $ git config --global user.name "Your Name"
     $ git config --global user.email "email@example.com"
 
@@ -250,7 +253,80 @@ Git用`<<<<<<<`，`=======`，`>>>>>>>`标记出不同分支的内容，我们�
 - 建立本地分支和远程分支的关联，使用`git branch --set-upstream branch-name origin/branch-name`；
 
 - 从远程抓取分支，使用`git pull`，如果有冲突，要先[处理冲突](###3.解决远程冲突)。
+
+## Rebase
+-------------------
+- `git rebase`操作的特点：把分叉的提交历史“整理”成一条直线，看上去更直观。
+- 缺点是本地的分叉提交已经被修改过了。
+- 最后，通过push操作把本地分支推送到远程：远程分支的提交历史也是一条直线。
   
+### 小结
+- rebase操作可以把本地未push的分叉提交历史整理成直线；
+
+- rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+
+# 标签管理
+发布版本时，我们通常会在版本库中打一个标签`tag`，这样将来无论什么时候，都可以直接回取到标签时刻的版本。
+* 所以说，标签是版本库的一个`快照`
+* Git的标签虽然是版本库的快照，但其实它就是指向某个commit的`指针`
+* 和分支的区别是：分支可以移动，标签不能移动
+* 创建和删除标签都是瞬间完成的。
+
+## 创建标签
+- 命令`git tag <tagname>`用于新建一个标签，默认为HEAD，也可以指定一个commit id；
+  
+      $ git tag -a v0.1 -m "version 0.1 released" 1094adb
+
+- 命令`git tag -a <tagname> -m "blablabla..."`可以指定标签信息；
+
+- 命令`git tag`可以查看所有标签。
+  - 注意，标签不是按时间顺序列出，而是按字母排序的。
+  - 注意，标签总是和某个commit挂钩。如果这个commit既出现在master分支，又出现在dev分支，那么在这两个分支上都可以看到这个标签。
+
+## 管理标签
+- 命令`git push origin <tagname>`可以推送一个本地标签；
+
+- 命令`git push origin --tags`可以推送全部未推送过的本地标签；
+
+- 命令`git tag -d <tagname>`可以删除一个本地标签；
+  
+- 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签。
+  - 如果需要删除已经提交的远程标签，则需要先删除本地标签，然后再进行此步骤。
+# 自定义Git
+
+## **.gitignore**
+- 忽略某些文件时，需要编写.gitignore；
+  - 使用Windows, 在文本编辑器里“保存”或者“另存为”就可以把文件保存为.gitignore  
+- 有些时候，你想添加一个文件到Git，但发现添加不了，原因是这个文件被.gitignore忽略了
+  - 可以使用`git add -f  <nameigonred>`来强制添加被忽略的文件；
+  - 可以用`git check-ignore`命令检查为什么此文件被忽略
+    
+        $ git check-ignore -v App.class
+        .gitignore:3:*.class	App.class
+
+  - git告诉我们，`.gitignore`的第3行规则忽略了该文件，于是我们就可以知道应该修订哪个规则。
+
+- `.gitignore`文件本身要放到版本库里，并且可以对.gitignore做版本管理！
+
+## 配置别名
+如果敲git st就表示git status那就简单多了，当然这种偷懒的办法我们是极力赞成的。
+
+我们只需要敲一行命令，告诉Git，以后st就表示status： 
+
+    $ git config --global alias.st status
+
+*another example:*
+    
+    $ git config --global alias.last 'log -1'
+
+其实是`简单字符串的替换协议`
+
+
+### 查看配置文件
+----
+- 对于本地的文件，在当前目录下`cat .git/config`即可查看到。
+- 对于用户的全局配置，则在用户主目录的隐藏文件`.gitconfig`中保存。
+ 
 # **出现vi界面**
 It’s not a Git error message, it’s the editor git uses your default editor.
 
