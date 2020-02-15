@@ -1,7 +1,10 @@
 # **Git 学习笔记**
+- 作者：lu KONG
+- 此`md`为作者学习Git时的笔记，用于日后查阅以及可能的分享，文章主题内容以及主要的学习资料来自[廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/896043488029600)，如有任何建议和指导，欢迎[联系作者](https://github.com/lu-kong)
+- 感谢[廖雪峰老师](https://github.com/michaelliao)  
+- v2.0   --*2020年2月15日*  
 
-
-
+# 安装git的初始设置
     $ git config --global user.name "Your Name"
     $ git config --global user.email "email@example.com"
 
@@ -289,6 +292,41 @@ Git用`<<<<<<<`，`=======`，`>>>>>>>`标记出不同分支的内容，我们�
   
 - 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签。
   - 如果需要删除已经提交的远程标签，则需要先删除本地标签，然后再进行此步骤。
+# 自定义Git
+
+## **.gitignore**
+- 忽略某些文件时，需要编写.gitignore；
+  - 使用Windows, 在文本编辑器里“保存”或者“另存为”就可以把文件保存为.gitignore  
+- 有些时候，你想添加一个文件到Git，但发现添加不了，原因是这个文件被.gitignore忽略了
+  - 可以使用`git add -f  <nameigonred>`来强制添加被忽略的文件；
+  - 可以用`git check-ignore`命令检查为什么此文件被忽略
+    
+        $ git check-ignore -v App.class
+        .gitignore:3:*.class	App.class
+
+  - git告诉我们，`.gitignore`的第3行规则忽略了该文件，于是我们就可以知道应该修订哪个规则。
+
+- `.gitignore`文件本身要放到版本库里，并且可以对.gitignore做版本管理！
+
+## 配置别名
+如果敲git st就表示git status那就简单多了，当然这种偷懒的办法我们是极力赞成的。
+
+我们只需要敲一行命令，告诉Git，以后st就表示status： 
+
+    $ git config --global alias.st status
+
+*another example:*
+    
+    $ git config --global alias.last 'log -1'
+
+其实是`简单字符串的替换协议`
+
+
+### 查看配置文件
+----
+- 对于本地的文件，在当前目录下`cat .git/config`即可查看到。
+- 对于用户的全局配置，则在用户主目录的隐藏文件`.gitconfig`中保存。
+ 
 # **出现vi界面**
 It’s not a Git error message, it’s the editor git uses your default editor.
 
